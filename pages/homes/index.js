@@ -5,17 +5,42 @@ function index() {
 
   const [search, setSearch] = useState("");
   const [homes, setHomes] = useState([...db.homes]);
+  const [sort, setSort] = useState("-1");
+  
 
   useEffect(() => {
     const newHomes = db.homes.filter((home) => home.title.includes(search));
     setHomes(newHomes);
   }, [search])
 
+  useEffect(() => {
+    switch (sort) {
+      case "price": {
+        const newHomes = [...homes].sort((a, b) => a.price - b.price);
+        setHomes(newHomes);
+        break;
+      }
+      case "room": {
+        const newHomes = [...homes].sort((a, b) => a.roomCount - b.roomCount);
+        setHomes(newHomes);
+        break;
+      }
+      case "meterage": {
+        const newHomes = [...homes].sort((a, b) => a.meterage - b.meterage);
+        setHomes(newHomes);
+        break;
+      }
+      default: {
+        setHomes([...db.homes]);
+      }
+    }
+  }, [sort]);
+
   return (
     <div className="home-section" id="houses">
       <div className="home-filter-search">
         <div className="home-filter">
-          <select>
+          <select defaultValue={sort} onChange={(e) => setSort(e.target.value)}>
             <option value="-1">انتخاب کنید</option>
             <option value="price">بر اساس قیمت</option>
             <option value="room">بر اساس تعداد اتاق</option>
