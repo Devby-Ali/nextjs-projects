@@ -1,17 +1,17 @@
+import React, { useEffect, useState } from "react";
+import db from "./../../data/db.json";
 import Home from "@/components/modules/Home";
-import db from "../../data/db.json";
-import { useEffect, useState } from "react";
-function index() {
 
+function index() {
   const [search, setSearch] = useState("");
-  const [homes, setHomes] = useState([...db.homes]);
   const [sort, setSort] = useState("-1");
-  
+  const [homes, setHomes] = useState([...db.homes]);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     const newHomes = db.homes.filter((home) => home.title.includes(search));
     setHomes(newHomes);
-  }, [search])
+  }, [search]);
 
   useEffect(() => {
     switch (sort) {
@@ -36,6 +36,18 @@ function index() {
     }
   }, [sort]);
 
+  const paginateHandler = (event, page) => {
+    event.preventDefault();
+
+    const endIndex = 3 * page;
+    const startIndex = endIndex - 3;
+
+    const paginatedHomes = db.homes.slice(startIndex, endIndex);
+    setHomes(paginatedHomes);
+
+    // Codes
+  };
+
   return (
     <div className="home-section" id="houses">
       <div className="home-filter-search">
@@ -49,16 +61,16 @@ function index() {
         </div>
         <div className="home-search">
           <input
+            type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            type="text"
             placeholder="جستجو کنید"
           />
         </div>
       </div>
 
       <div className="homes">
-        {homes.slice(0, 6).map((home) => (
+        {homes.slice(0, 3).map((home) => (
           <Home key={home.id} {...home} />
         ))}
       </div>
