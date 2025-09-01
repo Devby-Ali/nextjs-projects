@@ -1,6 +1,15 @@
 import Home from "@/components/modules/Home";
 import db from "../../data/db.json";
+import { useEffect, useState } from "react";
 function index() {
+
+  const [search, setSearch] = useState("");
+  const [homes, setHomes] = useState([...db.homes]);
+
+  useEffect(() => {
+    const newHomes = db.homes.filter((home) => home.title.includes(search));
+    setHomes(newHomes);
+  }, [search])
 
   return (
     <div className="home-section" id="houses">
@@ -15,6 +24,8 @@ function index() {
         </div>
         <div className="home-search">
           <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             type="text"
             placeholder="جستجو کنید"
           />
@@ -22,7 +33,7 @@ function index() {
       </div>
 
       <div className="homes">
-        {db.homes.map((home) => (
+        {homes.slice(0, 6).map((home) => (
           <Home key={home.id} {...home} />
         ))}
       </div>
