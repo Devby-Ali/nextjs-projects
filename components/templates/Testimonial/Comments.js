@@ -2,6 +2,7 @@ import Testimonial from "@/components/modules/Testimonial/Testimonial";
 import React from "react";
 
 function Comments({ data }) {
+  console.log("Comments =>", data);
 
   return (
     <div class="container-fluid py-5">
