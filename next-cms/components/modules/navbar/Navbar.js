@@ -18,8 +18,8 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    setSearch(router.query.q);
-  }, []);
+    setSearch(router.query.q || "");
+  }, [router.query.q]);
 
   return (
     <nav className={styles.navbar}>
