@@ -6,12 +6,12 @@
 
 html {
   font-size: 63.5%;
+  direction: rtl;
 }
 
 body {
   background-color: #f9f9f9;
   font-family: "shabnam";
-  direction: rtl;
 }
 
 .container {
