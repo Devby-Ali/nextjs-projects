@@ -6,6 +6,7 @@
 
 html {
   font-size: 62.5%;
+  direction: rtl;
 }
 
 body {
@@ -14,7 +15,6 @@ body {
   background-color: var(--color-white);
   min-height: 100vh;
   max-width: 100%;
-  direction: rtl;
 }
 
 :root {
