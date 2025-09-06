@@ -31,6 +31,8 @@ function Index() {
 
       alert("Registered Successfully :))");
       router.replace("/dashboard");
+    } else if (res.status === 422) {
+      alert("This username or email exist already !!");
     }
   };
 
