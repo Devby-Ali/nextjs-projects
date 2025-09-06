@@ -23,8 +23,7 @@ const schema = mongoose.Schema({
   },
   role: {
     type: String,
-    required: true, // USER - ADMIN
-    // default: "USER",
+    required: true,
   },
 });
 
