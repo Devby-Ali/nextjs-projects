@@ -49,19 +49,17 @@ const handler = async (req, res) => {
       role: users.length > 0 ? "USER" : "ADMIN",
     });
 
-    return (
-      res
-        // .setHeader(
-        //   "Set-Cookie",
-        //   serialize("token", token, {
-        //     httpOnly: true,
-        //     path: "/",
-        //     maxAge: 60 * 60 * 24,
-        //   })
-        // )
-        .status(201)
-        .json({ message: "User Created Successfully :))" })
-    );
+    return res
+      .setHeader(
+        "Set-Cookie",
+        serialize("token", token, {
+          httpOnly: true,
+          path: "/",
+          maxAge: 60 * 60 * 24,
+        })
+      )
+      .status(201)
+      .json({ message: "User Created Successfully :))" });
   } catch (err) {
     return res
       .status(500)
