@@ -1,6 +1,7 @@
 import UserModel from "@/models/User";
 import connectToDB from "@/configs/db";
 import { generateToken, hashPassword } from "@/utils/auth";
+import { serialize } from "cookie";
 
 const handler = async (req, res) => {
   if (req.method !== "POST") {
@@ -33,11 +34,6 @@ const handler = async (req, res) => {
         .json({ message: "This username or email exist already !!" });
     }
 
-    // isUserExist ✅
-    // HashPassword ✅
-    // GenerateToken ✅
-    // Create ✅
-
     const hashedPassword = await hashPassword(password);
 
     const token = generateToken({ email });
@@ -52,8 +48,16 @@ const handler = async (req, res) => {
     });
 
     return res
+      .setHeader(
+        "Set-Cookie",
+        serialize("token", token, {
+          httpOnly: true,
+          path: "/",
+          maxAge: 60 * 60 * 24,
+        })
+      )
       .status(201)
-      .json({ message: "User Created Successfully :))", token });
+      .json({ message: "User Created Successfully :))" });
   } catch (err) {
     return res
       .status(500)
