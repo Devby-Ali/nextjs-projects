@@ -12,7 +12,11 @@ import {
   faBars,
 } from "@fortawesome/free-solid-svg-icons";
 
+import { useRouter } from "next/router";
+
 function Index() {
+  const router = useRouter();
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -32,6 +36,20 @@ function Index() {
     userAuth();
   }, []);
 
+  const signOut = async () => {
+    const res = await fetch("/api/auth/signout");
+    const data = await res.json();
+
+    if (res.status === 200) {
+      setIsLoggedIn(false);
+      setIsAdmin(false);
+
+      alert("User Logged Out Successfully :))");
+
+      router.replace("/");
+    }
+  };
+
   return (
     <div className="container">
       <aside className="sidebar">
@@ -49,7 +67,7 @@ function Index() {
                     Dashboard
                   </Link>
                 </li>
-                <li>
+                <li onClick={signOut}>
                   <Link href="#">
                     <span>
                       <FontAwesomeIcon icon={faSignOut} />
