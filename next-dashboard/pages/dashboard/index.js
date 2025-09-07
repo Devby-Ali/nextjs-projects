@@ -1,16 +1,23 @@
+import connectToDB from "@/configs/db";
+import UserModel from "@/models/User";
 import { verifyToken } from "@/utils/auth";
 import React from "react";
 
-function Dashboard() {
+function Dashboard({ user }) {
+  console.log("User:", user);
+
   return (
     <>
-      <h1>Amin - Saeedi - Welcome To Dashboard</h1>
+      <h1>
+        {user.firstname} - {user.lastname} - Welcome To Dashboard
+      </h1>
     </>
   );
 }
 
 export async function getServerSideProps(context) {
   const { token } = context.req.cookies;
+  connectToDB();
 
   if (!token) {
     return {
@@ -21,7 +28,6 @@ export async function getServerSideProps(context) {
   }
 
   const tokenPayload = verifyToken(token);
-  console.log(tokenPayload.email);
 
   if (!tokenPayload) {
     return {
@@ -31,8 +37,17 @@ export async function getServerSideProps(context) {
     };
   }
 
+  const user = await UserModel.findOne(
+    {
+      email: tokenPayload.email,
+    },
+    "-_id firstname lastname"
+  );
+
   return {
-    props: {},
+    props: {
+      user: JSON.parse(JSON.stringify(user)),
+    },
   };
 }
 
