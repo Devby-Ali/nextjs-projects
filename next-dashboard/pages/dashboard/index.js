@@ -4,8 +4,6 @@ import { verifyToken } from "@/utils/auth";
 import React from "react";
 
 function Dashboard({ user }) {
-  console.log("User:", user);
-
   return (
     <>
       <h1>
@@ -14,6 +12,8 @@ function Dashboard({ user }) {
     </>
   );
 }
+
+// Route Protection ✅
 
 export async function getServerSideProps(context) {
   const { token } = context.req.cookies;
