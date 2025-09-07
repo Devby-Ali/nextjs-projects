@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
@@ -9,8 +9,10 @@ import connectToDB from "@/configs/db";
 import { verifyToken } from "@/utils/auth";
 import TodoModel from "@/models/Todo";
 import UserModel from "@/models/User";
+import { useRouter } from "next/router";
 
 function Todolist({ user, todos }) {
+  const router = useRouter();
   const [isShowInput, setIsShowInput] = useState(false);
   const [title, setTitle] = useState("");
   const [allTodos, setAllTodos] = useState([...todos]);
@@ -29,6 +31,16 @@ function Todolist({ user, todos }) {
 
     if (res.status === 200) {
       getTodos();
+    }
+  };
+
+  const signOut = async () => {
+    const res = await fetch("/api/auth/signout");
+    console.log("Res =>", res);
+
+    if (res.status === 200) {
+      alert("Logout Successfully :))");
+      router.replace("/signin");
     }
   };
 
@@ -98,7 +110,7 @@ function Todolist({ user, todos }) {
               />
             </svg>
           </div>
-          <div className="time">
+          <div className="time" onClick={signOut}>
             <a href="#">Logout</a>
           </div>
         </div>
@@ -134,7 +146,7 @@ export async function getServerSideProps(context) {
   if (!token) {
     return {
       redirect: {
-        destination: "/signin",
+        destination: "/signup",
       },
     };
   }
