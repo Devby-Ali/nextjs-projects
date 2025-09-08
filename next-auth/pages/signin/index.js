@@ -11,7 +11,10 @@ function Index() {
     const res = await signIn("credentials", {
       identifier,
       password,
+      redirect: false,
     });
+
+    console.log("Res ->", res);
   };
 
   return (
