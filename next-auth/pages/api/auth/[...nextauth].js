@@ -8,24 +8,9 @@ export default NextAuth({
   providers: [
     CredentialsProvider({
       name: "Next-Credentials",
-      credentials: {
-        username: {
-          label: "Username",
-          type: "text",
-          placeholder: "Username ...",
-        },
-        password: {
-          label: "Password",
-          type: "password",
-          placeholder: "Password ...",
-        },
-        email: {
-          label: "Email",
-          type: "email",
-          placeholder: "Email ...",
-        },
-      },
       async authorize(credentials, req) {
+        console.log("Credentials ->", credentials);
+
         return { email: "amin@gmail.com" }; // Jwt Payload
       },
     }),

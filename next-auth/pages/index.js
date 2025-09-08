@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import { signIn } from "next-auth/react";
+
 import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -36,8 +36,8 @@ function Index() {
           </>
           <>
             {/* User not login */}
-            <li onClick={() => signIn()}>
-              <Link href="/#">
+            <li>
+              <Link href="/signin">
                 <span>
                   <FontAwesomeIcon icon={faSignIn} />
                 </span>
