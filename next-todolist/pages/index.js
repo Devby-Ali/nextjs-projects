@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
@@ -146,7 +146,7 @@ export async function getServerSideProps(context) {
   if (!token) {
     return {
       redirect: {
-        destination: "/signup",
+        destination: "/signin",
       },
     };
   }
