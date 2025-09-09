@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import swal from "sweetalert";
 
 function Index() {
   const [phone, setPhone] = useState("");
@@ -7,7 +8,6 @@ function Index() {
 
   const sendCode = async (event) => {
     event.preventDefault();
-    console.log("Send Code !!");
 
     const res = await fetch("/api/sms/send", {
       method: "POST",
@@ -17,7 +17,20 @@ function Index() {
       body: JSON.stringify({ phone }),
     });
 
-    console.log("Res ->", res);
+    if (res.status === 201) {
+      setIsCodeSent(true);
+
+      swal({
+        title: "Code Sent Successfully :))",
+        icon: "success",
+        buttons: "Enter Code",
+      });
+    }
+  };
+
+  const verifyCode = async (event) => {
+    event.preventDefault();
+    console.log("Verify Code !!");
   };
 
   return (
@@ -36,7 +49,12 @@ function Index() {
               />
               <label>Code</label>
             </div>
-            <input type="submit" className="register-btn" value="Verify Code" />
+            <input
+              type="submit"
+              className="register-btn"
+              value="Verify Code"
+              onClick={verifyCode}
+            />
           </>
         ) : (
           <>
