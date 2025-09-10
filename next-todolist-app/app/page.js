@@ -6,19 +6,23 @@ import Todos from "@/components/Todos";
 import { cookies } from "next/headers";
 import { verifyToken } from "@/utils/auth";
 import { redirect } from "next/navigation";
-// import connectToDB from "@/configs/db";
-// import { verifyToken } from "@/utils/auth";
-// import TodoModel from "@/models/Todo";
-// import UserModel from "@/models/User";
-// import { useRouter } from "next/router";
+import connectToDB from "@/configs/db";
+import TodoModel from "@/models/Todo";
+import UserModel from "@/models/User";
 
-export default function Home() {
+export default async function Home() {
   const token = cookies().get("token")?.value;
-  const isValidToken = verifyToken(token);
+  const tokenPayload = verifyToken(token);
 
-  if (!isValidToken) {
+  if (!tokenPayload) {
     return redirect("/signin");
   }
+
+  // const res = await fetch(""); ❌
+
+  connectToDB();
+  const user = await UserModel.findOne({ email: tokenPayload.email });
+  const todos = await TodoModel.find({ user: user._id });
 
   return (
     <>
@@ -29,9 +33,9 @@ export default function Home() {
       </div>
 
       <div className="container">
-        <Header />
+        <Header firstname={user.firstname} lastname={user.lastname} />
         <div className="pad">
-          <Todos />
+          <Todos todos={todos} />
         </div>
       </div>
     </>

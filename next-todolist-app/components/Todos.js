@@ -6,8 +6,8 @@ config.autoAddCss = false;
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-function Todos() {
-  const [allTodos, setAllTodos] = useState([]);
+function Todos({ todos }) {
+  const [allTodos, setAllTodos] = useState([...todos]);
 
   const removeTodo = () => {};
 

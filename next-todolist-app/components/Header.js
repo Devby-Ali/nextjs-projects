@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-function Header() {
+function Header({ firstname, lastname }) {
   const [title, setTitle] = useState("");
   const [isShowInput, setIsShowInput] = useState(false);
 
@@ -48,7 +48,9 @@ function Header() {
       </div>
       <div className="head">
         <div className="date">
-          <p>user.firstname - user.lastname</p>
+          <p>
+            {firstname} {lastname}
+          </p>
         </div>
         <div className="add" onClick={(event) => setIsShowInput(true)}>
           <svg
