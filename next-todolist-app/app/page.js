@@ -1,95 +1,98 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
+import React, { useState, useEffect } from "react";
+// import "@/styles/page.module.css";
+
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+config.autoAddCss = false;
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+// import connectToDB from "@/configs/db";
+// import { verifyToken } from "@/utils/auth";
+// import TodoModel from "@/models/Todo";
+// import UserModel from "@/models/User";
+// import { useRouter } from "next/router";
 
 export default function Home() {
+  const [title, setTitle] = useState("");
+  const [isShowInput, setIsShowInput] = useState(false);
+  const [allTodos, setAllTodos] = useState([]);
+
+  const addTodo = () => {};
+  const removeTodo = () => {};
+  const signOut = () => {};
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
+    <>
+      <h1>Next-Todos</h1>
+
+      <div className="alert">
+        <p>⚠ Please add a task first!</p>
+      </div>
+
+      <div className="container">
+        <div
+          className="form-container"
+          style={{ display: `${isShowInput ? "block" : "none"}` }}
+        >
+          <div className="add-form">
+            <input
+              id="input"
+              type="text"
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
+              placeholder="Type your To-Do works..."
             />
-          </a>
+            <button type="submit" id="submit" onClick={addTodo}>
+              ADD
+            </button>
+          </div>
+        </div>
+        <div className="head">
+          <div className="date">
+            <p>user.firstname - user.lastname</p>
+          </div>
+          <div className="add" onClick={(event) => setIsShowInput(true)}>
+            <svg
+              width="2rem"
+              height="2rem"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+              />
+              <path
+                fillRule="evenodd"
+                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+              />
+            </svg>
+          </div>
+          <div className="time" onClick={signOut}>
+            <a href="#">Logout</a>
+          </div>
+        </div>
+        <div className="pad">
+          <div id="todo">
+            <ul id="tasksContainer">
+              {allTodos.map((todo) => (
+                <li key={todo._id}>
+                  <span className="mark">
+                    <input type="checkbox" className="checkbox" />
+                  </span>
+                  <div className="list">
+                    <p>{todo.title}</p>
+                  </div>
+                  <span className="delete" onClick={() => removeTodo(todo._id)}>
+                    <FontAwesomeIcon icon={faTrash} />
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+    </>
+  );
 }
