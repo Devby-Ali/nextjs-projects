@@ -35,7 +35,7 @@ export default async function Home() {
       <div className="container">
         <Header firstname={user.firstname} lastname={user.lastname} />
         <div className="pad">
-          <Todos todos={todos} />
+          <Todos todos={JSON.parse(JSON.stringify(todos))} />
         </div>
       </div>
     </>
