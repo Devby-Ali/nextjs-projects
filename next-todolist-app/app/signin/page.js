@@ -1,8 +1,9 @@
 "use client";
-// import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 function page() {
+  const router = useRouter();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
 
@@ -21,7 +22,7 @@ function page() {
     console.log("Res ->", res);
 
     if (res.status === 200) {
-      // redirect("/");
+      router.push("/");
     }
   };
 

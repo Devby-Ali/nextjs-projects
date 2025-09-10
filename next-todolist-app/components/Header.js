@@ -1,7 +1,9 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 function Header({ firstname, lastname }) {
+  const router = useRouter();
   const [title, setTitle] = useState("");
   const [isShowInput, setIsShowInput] = useState(false);
 
@@ -25,7 +27,13 @@ function Header({ firstname, lastname }) {
       setTitle("");
     }
   };
-  const signOut = () => {};
+  const signOut = async () => {
+    const res = await fetch("/api/auth/signout", { method: "POST" });
+
+    if (res.status === 200) {
+      router.push("/signin");
+    }
+  };
 
   return (
     <>
