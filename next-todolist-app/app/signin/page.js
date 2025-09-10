@@ -1,4 +1,5 @@
 "use client";
+// import { redirect } from "next/dist/server/api-utils";
 import React, { useState } from "react";
 
 function page() {
@@ -7,7 +8,21 @@ function page() {
 
   const signIn = async (event) => {
     event.preventDefault();
-    console.log(identifier, password);
+    const user = { identifier, password };
+
+    const res = await fetch("/api/auth/signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+
+    console.log("Res ->", res);
+
+    if (res.status === 200) {
+      // redirect("/");
+    }
   };
 
   return (

@@ -39,7 +39,7 @@ export async function POST(req) {
       { message: "User Logged In Successfully :))" },
       {
         status: 200,
-        headers: { "Set-Cookie": `token=${token};path=/` },
+        headers: { "Set-Cookie": `token=${token};path=/;httpOnly=true;` },
       }
     );
   } catch (err) {
