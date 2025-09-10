@@ -1,6 +1,8 @@
 import connectToDB from "@/configs/db";
 import UserModel from "@/models/User";
+import TodoModel from "@/models/Todo";
 import { verifyToken } from "@/utils/auth";
+import { cookies } from "next/headers";
 
 export async function POST(req) {
   try {
@@ -17,7 +19,7 @@ export async function POST(req) {
       );
     }
 
-    const tokenPayload = verifyToken(token);
+    const tokenPayload = verifyToken(token.value);
     if (!tokenPayload) {
       return Response.json(
         { message: "You are not login !!" },
@@ -29,7 +31,7 @@ export async function POST(req) {
       email: tokenPayload.email,
     });
 
-    const body = req.json();
+    const body = await req.json();
     const { title, isCompleted } = body;
 
     const newTodo = {
@@ -45,6 +47,8 @@ export async function POST(req) {
       { status: 201 }
     );
   } catch (err) {
+    console.log("Err ->", err);
+
     return Response.json(
       { message: "Ooops!! Internal server error :((" },
       { status: 500 }

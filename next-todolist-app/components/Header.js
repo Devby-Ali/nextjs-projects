@@ -5,7 +5,26 @@ function Header() {
   const [title, setTitle] = useState("");
   const [isShowInput, setIsShowInput] = useState(false);
 
-  const addTodo = () => {};
+  const addTodo = async (event) => {
+    const todo = {
+      title,
+      isCompleted: false,
+    };
+
+    const res = await fetch("/api/todos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(todo),
+    });
+
+    console.log("Res ->", res);
+
+    if (res.status === 201) {
+      setTitle("");
+    }
+  };
   const signOut = () => {};
 
   return (
