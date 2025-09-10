@@ -25,6 +25,7 @@ function Header({ firstname, lastname }) {
 
     if (res.status === 201) {
       setTitle("");
+      location.reload();
     }
   };
   const signOut = async () => {
