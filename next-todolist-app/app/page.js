@@ -10,8 +10,13 @@ import UserModel from "@/models/User";
 
 export default async function Home() {
   
+<<<<<<< HEAD
   const token = await cookies();
   const tokenPayload = verifyToken(token.get("token")?.value);
+=======
+  const token = await cookies().get("token")?.value;
+  const tokenPayload = verifyToken(token);
+>>>>>>> next-todolist
 
   if (!tokenPayload) {
     return redirect("/signin");

@@ -56,7 +56,3 @@ export async function POST(req) {
   }
 }
 
-export async function GET(req) {
-  // Get Todos For Users
-  // Cookie -> Token -> Email -> User -> Todos
-}
