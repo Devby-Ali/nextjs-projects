@@ -11,8 +11,8 @@ import TodoModel from "@/models/Todo";
 import UserModel from "@/models/User";
 
 export default async function Home() {
-  const token = cookies().get("token")?.value;
-  const tokenPayload = verifyToken(token);
+  const token = await cookies();
+  const tokenPayload = verifyToken(token.get("token")?.value);
 
   if (!tokenPayload) {
     return redirect("/signin");
