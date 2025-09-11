@@ -8,7 +8,7 @@ export async function POST(req) {
   try {
     connectToDB();
 
-    const token = cookies().get("token");
+    const token = await cookies().get("token");
 
     if (!token) {
       return Response.json(

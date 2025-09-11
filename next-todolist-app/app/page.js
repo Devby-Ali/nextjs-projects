@@ -1,6 +1,4 @@
 import React from "react";
-// import "@/styles/page.module.css";
-
 import Header from "@/components/Header";
 import Todos from "@/components/Todos";
 import { cookies } from "next/headers";
@@ -11,14 +9,13 @@ import TodoModel from "@/models/Todo";
 import UserModel from "@/models/User";
 
 export default async function Home() {
+  
   const token = await cookies();
   const tokenPayload = verifyToken(token.get("token")?.value);
 
   if (!tokenPayload) {
     return redirect("/signin");
   }
-
-  // const res = await fetch(""); ❌
 
   connectToDB();
   const user = await UserModel.findOne({ email: tokenPayload.email });
