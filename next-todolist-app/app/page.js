@@ -11,7 +11,8 @@ import TodoModel from "@/models/Todo";
 import UserModel from "@/models/User";
 
 export default async function Home() {
-  const token = cookies().get("token")?.value;
+  
+  const token = await cookies().get("token")?.value;
   const tokenPayload = verifyToken(token);
 
   if (!tokenPayload) {
