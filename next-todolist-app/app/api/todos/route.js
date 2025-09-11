@@ -56,22 +56,3 @@ export async function POST(req) {
   }
 }
 
-export async function DELETE (req) {
-  try {
-    connectToDB();
-    const body = await req.json();
-    const { id } = body;
-    await TodoModel.findOneAndDelete({ _id: id });
-    return Response.json(
-      { message: "Todo Removed Successfully :))" },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.log("Err ->", err);
-
-    return Response.json(
-      { message: "Ooops!! Internal server error :((" },
-      { status: 500 }
-    );
-  }
-}
